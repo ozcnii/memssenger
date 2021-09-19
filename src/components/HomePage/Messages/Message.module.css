@@ -1,0 +1,35 @@
+.messageContainer {
+    display: flex;
+    align-items: center;
+    background-color: #313131;
+    padding: 10px;
+    margin-bottom: 15px;
+    height: 65px;
+    border-radius: 20px;
+    cursor: pointer;
+}
+.messageContainer:hover {
+    background-color: #3f3f3f; 
+}
+.avatar {
+    height: 45px;
+}
+.avatar img {
+    height: 45px;
+    width: 45px;
+    border-radius: 100%;
+    overflow: hidden;
+    margin-right: 10px;
+}
+.info {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+.top {
+    display: flex;
+    justify-content: space-between;
+}
+.date {
+    font-size: 12px;
+}

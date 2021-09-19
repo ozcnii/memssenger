@@ -1,0 +1,32 @@
+.container {
+    display: flex;
+    align-items: center;
+    background-color: #313131;
+    padding: 10px;
+    margin-bottom: 15px;
+    height: 60px;
+    border-radius: 20px;
+    cursor: pointer;
+}
+.container:hover {
+    background-color: #3f3f3f; 
+}
+.avatar {
+    height: 40px;
+}
+.avatar img {
+    height: 40px;
+    width: 40px;
+    border-radius: 100%;
+    overflow: hidden;
+    margin-right: 10px;
+}
+.info {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.date {
+    font-size: 14px;
+}
