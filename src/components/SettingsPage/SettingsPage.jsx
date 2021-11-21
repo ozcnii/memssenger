@@ -1,7 +1,11 @@
+import Header from "./Header/Header";
 import SettingsContainer from "./SettingsContainer/SettingContainer";
 
-export default function SettingsPage() {
+export default function SettingsPage({ setUser, user }) {
     return (
-        <SettingsContainer/>
+        <>
+            <Header/>
+            <SettingsContainer setUser={setUser} user={user} />
+        </>
     )
 }

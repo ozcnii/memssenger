@@ -1,45 +1,50 @@
-import styles from './App.module.css'
-
-import HomePage from "./components/HomePage/HomePage";
-import HomeHeaderContent from './components/HomePage/HomeHeaderContent/HomeHeaderContent';
-
-import SearchPage from "./components/SearchPage/SearchPage";
-import SearchHeaderContent from './components/SearchPage/SearchHeaderContent/SearchHeaderContent';
-
-import MenuPage from './components/MenuPage/MenuPage';
-import { BrowserRouter, Route } from 'react-router-dom';
-import SettingsHeaderContent from './components/SettingsPage/SettingsHeaderContent/SettingsHeaderContent';
+import { BrowserRouter, Route, Switch, Redirect, HashRouter} from 'react-router-dom';
+import routes from './routes/routes';
+import DialogsPage from './components/DialogsPage/DialogsPage';
+import Messages from './components/MessagePage/Messages';
+import SearchPage from './components/SearchPage/SearchPage';
 import SettingsPage from './components/SettingsPage/SettingsPage';
+import LoginPage from './components/LoginPage/LoginPage';
+import RegistrationPage from './components/LoginPage/RegistrationPage/RegistrationPage';
+import { useState } from 'react';
+
 
 function App() {
+
+  const [user, setUser] = useState(null)
+
+  const [chats, setChats] = useState([]);
+  const [dialog, setDialog] = useState(null);
+
   return (
-    <BrowserRouter>
+    // <BrowserRouter>
+      <HashRouter>
+        
+        <div className='header-background'></div>
 
-      <header className={styles.header}>
+        <Switch>
+            <Route exact path='/' render={ () =>  <Redirect to={routes.login} /> }/>
 
-        <Route exact path="/" render={ ()=> <HomeHeaderContent/> }/>
+            <Route path={routes.dialogs } render={() => (
+                <DialogsPage user={user} 
+                  setUser={setUser} 
+                  chats={chats}
+                  setChats={setChats}
+                  setDialog={setDialog}
+                />) } />
 
-        <Route path="/home" render={ ()=> <HomeHeaderContent/> }/>
-        <Route path="/search" render={ ()=> <SearchHeaderContent/> }/>
-        <Route path='/settings'render={()=> <SettingsHeaderContent/> } />
+            <Route path={routes.messages + '/:id'} render={() => <Messages dialog={dialog} user={user} />} />
+            <Route path={routes.settings} render={() => <SettingsPage setUser={setUser} user={user} /> } />
+            <Route path={routes.search } render={() => <SearchPage />} />
 
-      </header>
+            <Route path={routes.login} render={() => <LoginPage user={user} setUser={setUser} />} />
+            <Route path={routes.registr} render={() => <RegistrationPage  user={user} setUser={setUser}/>} />
 
+            <Route path='*' render={() => <Redirect to={routes.dialogs} />} />
+        </Switch>
 
-      <main className={styles.main}>
-        <Route exact path="/" render={ ()=> <HomePage/> }/>
-
-        <Route path="/home" render={ ()=> <HomePage/> }/>
-        <Route path="/search" render={ ()=> <SearchPage/> }/>
-        <Route path='/settings'render={()=> <SettingsPage/> } />
-
-      </main>
-
-      <div className={styles.menu}>
-        {/* if (menu == visible { return MenuPage}, else return 0) */}
-        {/* <MenuPage/> */}
-      </div>
-    </BrowserRouter>
+    </HashRouter>
+    // </BrowserRouter>
   );
 }
 

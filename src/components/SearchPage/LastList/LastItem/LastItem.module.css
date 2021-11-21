@@ -1,15 +1,15 @@
 .container {
     display: flex;
     align-items: center;
-    background-color: #313131;
-    padding: 10px;
     margin-bottom: 15px;
-    height: 60px;
     border-radius: 20px;
     cursor: pointer;
+    background-color: #181818;
+    height: 75px;
+    padding: 15px;
 }
 .container:hover {
-    background-color: #3f3f3f; 
+    background-color: #0f0f0f; 
 }
 .avatar {
     height: 40px;

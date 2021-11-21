@@ -1,0 +1,20 @@
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 60px;
+    margin-bottom: 20px;
+    padding: 0 20px;
+    background-color: #151515;
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+}
+.wrapper {
+    position: relative;
+    margin-bottom: 20px;
+}

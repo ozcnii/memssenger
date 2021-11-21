@@ -1,5 +1,5 @@
 import styles from './LastItem.module.css'
-import userAvatart from './../../../../images/other/messange/userAvatar.png'
+import userAvatart from './../../../../images/other/userAvatar.png'
 
 function LastItem() {
     return (
