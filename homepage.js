@@ -1,1 +1,0 @@
-  // "homepage": "https://ttenapp.github.io/react-deploy",
