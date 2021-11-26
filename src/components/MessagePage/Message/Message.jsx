@@ -20,7 +20,7 @@ export default function Message({message, uid, userUid, date}) {
     }
 
     return (
-        <div className={s.messageContainer} style={{ justifyContent: uid === userUid && 'flex-end', textAlign: uid === userUid &&  'right' }} >
+        <div className={s.messageContainer} style={{ justifyContent: uid === userUid && 'flex-end', textAlign: uid === userUid && 'right' }} >
             <div className={s.message}>
                     <span className={s.messageText}>{message}</span>
                     { date 
