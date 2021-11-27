@@ -7,6 +7,7 @@ import { db } from './../../../firebase';
 import Preloader from '../../Preloader/Preloader';
 
 function Dialogs({ user, setUser, chats, setChats, setDialog}) {
+    
     const history = useHistory();
 
     const [isLoading, setIsLoading] = useState(true);
@@ -44,7 +45,7 @@ function Dialogs({ user, setUser, chats, setChats, setDialog}) {
                         <Preloader />
                     ) : (
                     <>
-                        {chats.map( ({ email, uid, name}) => <Dialog key={uid} email={email} uid={uid} name={name} setDialog={setDialog} />)}
+                        {chats.map( (user) => <Dialog key={user.uid} user={user} setDialog={setDialog} />)}
                     </> )
                 }
             </BodyComponent>

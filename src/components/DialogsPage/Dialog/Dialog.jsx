@@ -2,7 +2,11 @@ import styles from './Dialog.module.css'
 import { NavLink } from 'react-router-dom';
 import routes from '../../../routes/routes';
 
-function Message({email, uid, setDialog, name}) {
+function Message({ user, setDialog }) {
+    console.log(user);
+
+    const {name, uid, email} = user;
+
     return (
         <>
             <NavLink to={routes.messages + `/${uid}` } className={styles.messageContainer} 
@@ -11,7 +15,8 @@ function Message({email, uid, setDialog, name}) {
                 <div className={styles.avatar}>
                     {/* <img src={ userAvatar ? userAvatar : userAvatart} alt="avatar" /> */}
                     {/* <img src="asd" alt="avatar"/> */}
-                    <p></p>
+                    { user?.avatar && <img src={user.avatar} alt="" /> }
+                    {/* <p></p> */}
                 </div>
 
                 <div className={styles.info}>

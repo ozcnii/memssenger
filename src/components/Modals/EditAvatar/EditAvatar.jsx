@@ -1,47 +1,63 @@
 import s from './../EditName/EditName.module.css';
 import ReactDOM from 'react-dom';
+import { collection, query, where, getDocs, doc, updateDoc } from "firebase/firestore";
+import { db } from './../../../firebase';
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
-import { getStorage, ref, uploadBytes, list, getDownloadURL } from "firebase/storage";
-import { useState } from 'react';
-
-export default function EditName({ setModal }) {
+export default function EditName({ setModal, user, setUser }) {
     return ReactDOM.createPortal((
-        <Modal setModal={setModal} />
+        <Modal setModal={setModal} user={user} setUser={setUser} />
     ), document.body)
 }
 
-function Modal({ setModal}) {
-
-    const [avatar, setAvatar] = useState(null)
+function Modal({ setModal, user, setUser}) {
 
     const onChange = async (event) => {
         event.preventDefault();
-        
-        // console.log(event.target.files[0]);
 
         const file = event.target.files[0]; 
         
-        const avatarName = 'uid' + '___________' + 'avatar';
+        const avatarName = user.uid +  '_avatar';
         
         const storage = getStorage();
         const storageRef = ref(storage, avatarName);
 
-        // 'file' comes from the Blob or File API
-        
-        uploadBytes(storageRef, file).then((snapshot) => {
-            console.log('Uploaded a blob or file!');
+        let avatarUrl = '';
+
+        await uploadBytes(storageRef, file).then((snapshot) => {
             
             getDownloadURL(ref(storage, avatarName))
             .then((url) => {
-                console.log(url);
-                setAvatar(url)
+                avatarUrl = url
             })
             .catch((error) => {
-                
+                console.log(error);
             });
         });
 
+        let docID = '';
+
+        const q = query(collection(db, "users"), where("uid", "==", user.uid));
+        const querySnapshot = await getDocs(q);
+        querySnapshot.forEach((doc) => {
+            docID = doc.id;
+        });
+    
+        const washingtonRef = doc(db, "users", docID);
+
+        await updateDoc(washingtonRef, {
+            avatar: avatarUrl
+        });
+
+        const newUser = {...user, avatar: avatarUrl};
+        setUser(newUser); 
         
+        setModal(false);
+
+        localStorage.setItem(
+            'user',
+            JSON.stringify(newUser)
+        );
     };  
 
     const onClose = (event) => {
@@ -58,12 +74,9 @@ function Modal({ setModal}) {
                 <form onChange={onChange} className={s.form}>
                     <input type="file" />
                 </form>
-               
-                { (avatar && ( <img src={avatar} alt="" /> )) }
 
                 <button onClick={onClose} data-close="close" className={s.close}>Отменить</button>
             </div>
         </div>
     )
 }
-

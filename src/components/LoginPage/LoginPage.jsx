@@ -30,6 +30,7 @@ export default function LoginPage({ setUser }) {
                 );
                 
                 let myName = null;
+                let myAvatar = null;
                 const userId = responseFromAuth.user.uid;
                     
                 const citiesRef = collection(db, "users");
@@ -38,6 +39,7 @@ export default function LoginPage({ setUser }) {
                 const querySnapshot = await getDocs(q);
                 querySnapshot.forEach((doc) => {
                     myName = doc.data().name
+                    myAvatar = doc.data().avatar
                 });
 
                 // save user to localStorage;
@@ -47,6 +49,7 @@ export default function LoginPage({ setUser }) {
                         email: myEmail,
                         uid: userId,
                         name: myName,
+                        avatar: myAvatar
                     })
                 );
                 
@@ -55,6 +58,7 @@ export default function LoginPage({ setUser }) {
                     email: myEmail,
                     uid: userId, 
                     name: myName,
+                    avatar: myAvatar
                 });
                 
                 history.push(routes.dialogs);

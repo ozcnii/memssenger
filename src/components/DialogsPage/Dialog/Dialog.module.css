@@ -15,14 +15,21 @@
     display: flex;
     align-items: center;
     justify-content: center;
-}
-.avatar p {
-    height: 45px;
-    width: 45px;
-    border-radius: 100%;
     overflow: hidden;
-    margin-right: 10px;
+    border-radius: 100%;
     background-color: rosybrown;
+    min-height: 45px;
+    min-width: 45px;
+    max-height: 45px;
+    max-width: 45px;
+    margin-right: 10px;
+}
+
+.avatar img {
+    max-height: 45px;
+    max-width: 45px;
+    min-height: 45px;
+    min-width: 45px;
 }
 .info {
     display: flex;
