@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { collection, query, where, getDocs, doc, updateDoc } from "firebase/firestore";
 import { db } from './../../../firebase';
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { useState } from 'react';
 
 export default function EditName({ setModal, user, setUser }) {
     return ReactDOM.createPortal((
@@ -12,7 +13,12 @@ export default function EditName({ setModal, user, setUser }) {
 
 function Modal({ setModal, user, setUser}) {
 
+    const [isLoading, setIsLoading] = useState(false);
+
     const onChange = async (event) => {
+        
+        setIsLoading(true)
+        
         event.preventDefault();
 
         const file = event.target.files[0]; 
@@ -43,21 +49,22 @@ function Modal({ setModal, user, setUser}) {
             docID = doc.id;
         });
     
-        const washingtonRef = doc(db, "users", docID);
+        const avatarRef = doc(db, "users", docID);
 
-        await updateDoc(washingtonRef, {
+        await updateDoc(avatarRef, {
             avatar: avatarUrl
         });
 
         const newUser = {...user, avatar: avatarUrl};
         setUser(newUser); 
         
-        setModal(false);
-
         localStorage.setItem(
             'user',
             JSON.stringify(newUser)
         );
+        
+        setIsLoading(false)
+        setModal(false);
     };  
 
     const onClose = (event) => {
@@ -72,10 +79,31 @@ function Modal({ setModal, user, setUser}) {
         <div className={s.modal} data-close="close" onClick={onClose}>
             <div className={s.modalContent}>
                 <form onChange={onChange} className={s.form}>
-                    <input type="file" />
+
+                    { !isLoading && (
+                        <>
+                            <label className={s.labelAvatar} htmlFor="avatar">
+                                Выберите файл
+                            </label>
+
+                            <input className={s.inputAvatar} type="file" id="avatar" />
+                        </>
+                    )}
+
+                    { isLoading && (
+                        <div className={s.labelAvatar}>
+                            loading...
+                        </div>
+                    )}
+
                 </form>
 
-                <button onClick={onClose} data-close="close" className={s.close}>Отменить</button>
+                {
+                    !isLoading && (
+                        <button onClick={onClose} data-close="close" className={s.close}>Отменить</button>
+                    )
+                }
+                
             </div>
         </div>
     )

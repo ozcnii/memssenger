@@ -52,3 +52,24 @@
 .close:hover {
     opacity: .8;
 }
+
+.inputAvatar {
+    display: none;
+}
+
+.labelAvatar {
+    width: 100%;
+    background-color: #fff;
+    border: none;
+    border-radius: 10px;
+    height: 40px;
+    padding: 10px 20px;
+    outline: none;
+    color: #1e90ff;
+    text-align: center;
+    cursor: pointer;
+}
+
+.labelAvatar:hover {
+    opacity: .8;
+}

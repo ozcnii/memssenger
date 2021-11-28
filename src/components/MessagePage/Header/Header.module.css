@@ -13,7 +13,7 @@
     justify-content: center;
     position: relative;
 }
-.userAvatar p {
+.userAvatar img {
     height: 30px;
     width: 30px;
     border-radius: 100%;

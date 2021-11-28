@@ -24,8 +24,7 @@ function Header( { dialog } ) {
                 <div className="appTitle">{dialog.name}</div> 
 
                 <div className={styles.userAvatar}>
-                    {/* <img src="as" alt="avatar"/> */}
-                    <p></p>
+                    <img src={dialog?.avatar} alt=""/>
                 </div>
             </HeaderComponent>
         </>

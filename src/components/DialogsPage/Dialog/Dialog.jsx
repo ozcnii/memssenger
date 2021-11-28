@@ -3,20 +3,16 @@ import { NavLink } from 'react-router-dom';
 import routes from '../../../routes/routes';
 
 function Message({ user, setDialog }) {
-    console.log(user);
 
-    const {name, uid, email} = user;
+    const {name, uid, email, avatar} = user;
 
     return (
         <>
             <NavLink to={routes.messages + `/${uid}` } className={styles.messageContainer} 
-                onClick={() => setDialog({ email, uid, name }) }
+                    onClick={() => setDialog({ email, uid, name, avatar }) }
                 >
                 <div className={styles.avatar}>
-                    {/* <img src={ userAvatar ? userAvatar : userAvatart} alt="avatar" /> */}
-                    {/* <img src="asd" alt="avatar"/> */}
                     { user?.avatar && <img src={user.avatar} alt="" /> }
-                    {/* <p></p> */}
                 </div>
 
                 <div className={styles.info}>
