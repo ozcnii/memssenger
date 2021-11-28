@@ -16,31 +16,33 @@ function Modal({ setModal, user, setUser}) {
     const [isLoading, setIsLoading] = useState(false);
 
     const onChange = async (event) => {
-        
         setIsLoading(true)
-        
         event.preventDefault();
 
         const file = event.target.files[0]; 
-        
+        await getAvatarUrl(file)
+    };  
+
+
+    const getAvatarUrl = async (file) => {
         const avatarName = user.uid +  '_avatar';
-        
         const storage = getStorage();
         const storageRef = ref(storage, avatarName);
 
-        let avatarUrl = '';
-
-        await uploadBytes(storageRef, file).then((snapshot) => {
-            
+        await uploadBytes(storageRef, file).then(() => {
             getDownloadURL(ref(storage, avatarName))
             .then((url) => {
-                avatarUrl = url
+                const avatarUrl = url
+
+                updateAvatar(avatarUrl)
             })
             .catch((error) => {
                 console.log(error);
             });
         });
+    }
 
+    const updateAvatar = async (avatarUrl) => {
         let docID = '';
 
         const q = query(collection(db, "users"), where("uid", "==", user.uid));
@@ -48,10 +50,10 @@ function Modal({ setModal, user, setUser}) {
         querySnapshot.forEach((doc) => {
             docID = doc.id;
         });
-    
+        
         const avatarRef = doc(db, "users", docID);
 
-        await updateDoc(avatarRef, {
+        updateDoc(avatarRef, {
             avatar: avatarUrl
         });
 
@@ -62,10 +64,10 @@ function Modal({ setModal, user, setUser}) {
             'user',
             JSON.stringify(newUser)
         );
-        
+            
         setIsLoading(false)
         setModal(false);
-    };  
+    }
 
     const onClose = (event) => {
         event.stopPropagation();
