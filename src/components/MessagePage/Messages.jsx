@@ -28,7 +28,9 @@ const Messages = ({ user, dialog }) => {
             const myMessage = {
                 message: message,
                 uid: user.uid,
-                date: new Date()
+                date: new Date(),
+                dialog_id: dialogId,
+                name: user.name
             };
 
             newMessage.current.value = '';

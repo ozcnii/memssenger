@@ -34,6 +34,7 @@ function Dialogs({ user, setUser, chats, setChats, setDialog}) {
             setChats(filteredUsers);
             setIsLoading(false);
         })()
+        
     }, [user, setChats]);
 
     return (
@@ -45,7 +46,7 @@ function Dialogs({ user, setUser, chats, setChats, setDialog}) {
                         <Preloader />
                     ) : (
                     <>
-                        {chats.map( (user) => <Dialog key={user.uid} user={user} setDialog={setDialog} />)}
+                        {chats.map( (chat) => <Dialog key={chat.uid} user={chat} setDialog={setDialog} authUser={user} />)}
                     </> )
                 }
             </BodyComponent>
@@ -54,4 +55,3 @@ function Dialogs({ user, setUser, chats, setChats, setDialog}) {
 }
 
 export default Dialogs;
-  

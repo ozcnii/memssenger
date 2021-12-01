@@ -11,7 +11,6 @@ export default function DialogsPage({ user, setUser, chats, setChats, setDialog 
                     chats={chats}
                     setChats={setChats}
                     setDialog={setDialog}/>
-            {/*<NewChatButton/>*/}
         </>
     );
 }

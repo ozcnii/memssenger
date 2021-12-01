@@ -19,7 +19,7 @@
 }
 .avatar {
   height: 100px;
-  min-width: 100px;
+  width: 100px;
   background-color: rosybrown;
   border-radius: 100%;
   overflow: hidden;

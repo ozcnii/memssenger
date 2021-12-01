@@ -1,23 +1,8 @@
 import s from './../Messages.module.css'
+import getDate from '../../../utils/get_date';
 
 export default function Message({message, uid, userUid, date}) {
-    let messageDate = null;
-
-    if (date) {
-        const thisDate = new Date(date.seconds * 1000);
-
-        let hours = thisDate.getHours();
-        if (hours < 10) {
-            hours = '0' + hours;
-        };
-
-        let minutes = thisDate.getMinutes();
-        if (minutes < 10) {
-            minutes = '0' + minutes;
-        };
-        messageDate = `${hours}:${minutes}`
-
-    }
+    const messageDate = getDate(date);
 
     return (
         <div className={s.messageContainer} style={{ justifyContent: uid === userUid && 'flex-end', textAlign: uid === userUid && 'right' }} >
