@@ -21,8 +21,7 @@ function Modal({ setModal, user, setUser}) {
 
         const file = event.target.files[0]; 
         await getAvatarUrl(file)
-    };  
-
+    };
 
     const getAvatarUrl = async (file) => {
         const avatarName = user.uid +  '_avatar';

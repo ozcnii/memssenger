@@ -35,7 +35,7 @@ function App() {
 
             <Route path={routes.messages + '/:id'} render={() => <Messages dialog={dialog} user={user} />} />
             <Route path={routes.settings} render={() => <SettingsPage setUser={setUser} user={user} /> } />
-            <Route path={routes.search } render={() => <SearchPage />} />
+            <Route path={routes.search } render={() => <SearchPage user={user} setDialog={setDialog} />} />
 
             <Route path={routes.login} render={() => <LoginPage user={user} setUser={setUser} />} />
             <Route path={routes.registr} render={() => <RegistrationPage  user={user} setUser={setUser}/>} />

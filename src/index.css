@@ -76,3 +76,29 @@ a {
 ::-webkit-scrollbar-corner {
   background: transparent;
 }
+
+.not-dialogs {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+.to-search {
+  background-color: #1e90ff;
+  max-width: 220px;
+  margin: 0 auto;
+  margin-top: 20px;
+  border-radius: 20px;
+  transition: .2s;
+  cursor: pointer;
+}
+
+.to-search a {
+  padding: 10px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.to-search:hover {
+  opacity: .9;
+  transition: .2s;
+}

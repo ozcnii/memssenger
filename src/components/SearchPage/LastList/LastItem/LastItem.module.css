@@ -13,13 +13,17 @@
 }
 .avatar {
     height: 40px;
+    min-width: 40px;
+    max-width: 40px;
+    background-color: rosybrown;
+    overflow: hidden;
+    border-radius: 100%;
+    margin-right: 15px;
 }
 .avatar img {
     height: 40px;
     width: 40px;
-    border-radius: 100%;
-    overflow: hidden;
-    margin-right: 10px;
+    object-fit: cover;
 }
 .info {
     display: flex;

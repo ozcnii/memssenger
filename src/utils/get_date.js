@@ -13,7 +13,7 @@ export default function getDate(date) {
         };
 
         const messageDate = `${hours}:${minutes}`;
-
+        
         return messageDate;
     }
 }
