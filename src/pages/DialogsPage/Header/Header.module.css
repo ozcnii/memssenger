@@ -1,0 +1,16 @@
+.menuButton svg{
+    fill: #f6f6f6;
+    height: 25px;
+}
+.menuButton {
+    display: flex;
+    align-items: center;
+}
+.searchButton {
+    display: flex;
+    align-items: center;
+}
+.searchButton svg {
+    fill: #f6f6f6;
+    height: 25px;
+}

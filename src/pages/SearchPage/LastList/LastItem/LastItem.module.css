@@ -1,0 +1,36 @@
+.container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    border-radius: 20px;
+    cursor: pointer;
+    background-color: #181818;
+    height: 75px;
+    padding: 15px;
+}
+.container:hover {
+    background-color: #0f0f0f; 
+}
+.avatar {
+    height: 40px;
+    min-width: 40px;
+    max-width: 40px;
+    background-color: rosybrown;
+    overflow: hidden;
+    border-radius: 100%;
+    margin-right: 15px;
+}
+.avatar img {
+    height: 40px;
+    width: 40px;
+    object-fit: cover;
+}
+.info {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.date {
+    font-size: 14px;
+}

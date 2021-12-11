@@ -1,0 +1,80 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 80px;
+}
+
+.title {
+    font-size: 20px;
+}
+
+.form {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    max-width: 80%;
+}
+
+.login, .password, .passwordConfirm {
+    border: none;
+    background-color: #fff;
+    outline: none;
+    padding: 10px 15px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    height: 40px;
+}
+.submit, .google, .facebook, .registr, .logIn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    border-radius: 5px;
+    height: 40px;
+    margin-bottom: 15px;
+    color: #fff;
+    padding: 0 20px;
+    font-size: 14px;
+}
+
+.submit {
+    margin-bottom: 30px;
+    background-color:rgb(69, 141, 69);
+}
+.google {
+    background-color: #ea4335;
+}
+
+.facebook {
+    background-color: #1877f2;
+}
+
+.registr, .logIn {
+    background-color: rgb(121, 101, 105);
+}
+
+.googleIcon, .fbIcon {
+    background-color: #fff;
+    height: 25px;
+    width: 25px;
+    margin-right: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2px;
+    border-radius: 4px;
+}
+.googleIcon svg {
+    fill: #ea4335;
+    height: 20px;
+}
+.fbIcon svg {
+    fill: #1877f2;
+    height: 20px;
+}
+
+.submit:hover, .google:hover, .facebook:hover, .registr:hover {
+    opacity: .8;
+}

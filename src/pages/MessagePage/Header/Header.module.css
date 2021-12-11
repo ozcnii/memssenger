@@ -1,0 +1,27 @@
+.backButton svg{
+    fill: #f6f6f6;
+    height: 25px;
+}
+.backButton {
+    display: flex;
+    align-items: center;
+}
+
+.userAvatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+.userAvatar img {
+    height: 30px;
+    width: 30px;
+    border-radius: 100%;
+    overflow: hidden;
+    margin-right: 10px;
+    background-color: rosybrown;
+}
+.container {
+    display: flex;
+    justify-content: space-between;
+}

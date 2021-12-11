@@ -1,11 +1,11 @@
 import { BrowserRouter, Route, Switch, Redirect, HashRouter} from 'react-router-dom';
 import routes from './routes/routes';
-import DialogsPage from './components/DialogsPage/DialogsPage';
-import Messages from './components/MessagePage/Messages';
-import SearchPage from './components/SearchPage/SearchPage';
-import SettingsPage from './components/SettingsPage/SettingsPage';
-import LoginPage from './components/LoginPage/LoginPage';
-import RegistrationPage from './components/LoginPage/RegistrationPage/RegistrationPage';
+import DialogsPage from './pages/DialogsPage/DialogsPage';
+import Messages from './pages/MessagePage/Messages';
+import SearchPage from './pages/SearchPage/SearchPage';
+import SettingsPage from './pages/SettingsPage/SettingsPage';
+import LoginPage from './pages/LoginPage/LoginPage';
+import RegistrationPage from './pages/LoginPage/RegistrationPage/RegistrationPage';
 import { useState } from 'react';
 
 

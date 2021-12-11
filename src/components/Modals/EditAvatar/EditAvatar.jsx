@@ -24,21 +24,26 @@ function Modal({ setModal, user, setUser}) {
     };
 
     const getAvatarUrl = async (file) => {
-        const avatarName = user.uid +  '_avatar';
-        const storage = getStorage();
-        const storageRef = ref(storage, avatarName);
+        
+        if (file.size > 1024*1024*10) {
+            alert('Размер изображения слишком большой')    
+        } else {
+            const avatarName = user.uid +  '_avatar';
+            const storage = getStorage();
+            const storageRef = ref(storage, avatarName);
 
-        await uploadBytes(storageRef, file).then(() => {
-            getDownloadURL(ref(storage, avatarName))
-            .then((url) => {
-                const avatarUrl = url
+            await uploadBytes(storageRef, file).then(() => {
+                getDownloadURL(ref(storage, avatarName))
+                .then((url) => {
+                    const avatarUrl = url
 
-                updateAvatar(avatarUrl)
-            })
-            .catch((error) => {
-                console.log(error);
+                    updateAvatar(avatarUrl)
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
             });
-        });
+        } 
     }
 
     const updateAvatar = async (avatarUrl) => {
