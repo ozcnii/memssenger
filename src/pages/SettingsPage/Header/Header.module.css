@@ -1,0 +1,16 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+}
+.backButton,
+.searchButton {
+    height: 25px;
+}
+.backButton svg {
+    fill: #f6f6f6;
+    height: 25px;
+}
+.searchButton svg {
+    fill: #f6f6f6;
+    height: 25px;
+}

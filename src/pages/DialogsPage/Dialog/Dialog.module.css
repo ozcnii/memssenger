@@ -1,0 +1,48 @@
+.messageContainer {
+  display: flex;
+  align-items: center;
+  background-color: #181818;
+  height: 75px;
+  padding: 15px;
+  margin-bottom: 15px;
+  border-radius: 20px;
+  cursor: pointer;
+}
+.messageContainer:hover {
+  background-color: #0f0f0f;
+}
+.avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: 100%;
+  background-color: rosybrown;
+  min-height: 45px;
+  min-width: 45px;
+  max-height: 45px;
+  max-width: 45px;
+  margin-right: 10px;
+}
+
+.avatar img {
+  max-height: 45px;
+  max-width: 45px;
+  min-height: 45px;
+  min-width: 45px;
+}
+.info {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.top {
+  display: flex;
+  justify-content: space-between;
+}
+.date {
+  font-size: 12px;
+}
+.userName {
+  font-weight: 500;
+}
