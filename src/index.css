@@ -108,3 +108,48 @@ a {
     text-overflow: ellipsis;
     max-width: 200px;
 }
+.emoji-button {
+    position: relative;
+    width: 50px;
+    background: #fff;
+    cursor: pointer;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+}
+
+.emoji-button:hover {
+    background: rgb(194, 194, 194);
+}
+
+.emoji-popover {
+    position: absolute;
+    top: -330px;
+    right: -20px;
+    width: 300px;
+    height: 300px;
+    animation: emoji-popover 0.3s;
+}
+
+@keyframes emoji-popover {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.emoji-popover_close {
+    animation: emoji-popover_close 0.3s;
+}
+
+@keyframes emoji-popover_close {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}

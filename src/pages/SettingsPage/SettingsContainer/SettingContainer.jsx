@@ -40,7 +40,7 @@ export default function SettingsContainer({ user, setUser }) {
 
     const saveToBuffer = async () => {
         const copyText =
-            "Привет, я использую Memssenger для общения с друзьями. Присоединяйся по ссылке: https://ttenapp.github.io/qwe";
+            "Привет, я использую Memssenger для общения с друзьями. Присоединяйся по ссылке: https://ozcnii.github.io/memssenger";
         try {
             await navigator.clipboard.writeText(copyText);
             const alertText =

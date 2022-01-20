@@ -38,8 +38,8 @@
     border-top-right-radius: 22px;
     padding: 0 10px;
 }
-.send:active {
-    background-color: rgb(233, 233, 233);
+.send:hover {
+    background: rgb(194, 194, 194);
 }
 .send svg {
     fill: #383838;

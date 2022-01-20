@@ -2,7 +2,7 @@ import Header from "./Header/Header";
 import BodyComponent from "../../components/Layout/Body/BodyComponent";
 import FormMessage from "./FormMessage/FormMessage";
 import MessagesWrapper from "./MessagesWrapper/MessagesWrapper";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { db } from "../../firebase";
 import {
     doc,
@@ -18,7 +18,7 @@ const Messages = ({ user, dialog }) => {
     const history = useHistory();
 
     const [messages, setMessages] = useState([]);
-    const newMessage = useRef("");
+    const [newMessage, setNewMessage] = useState("");
     const [dialogId, setDialogId] = useState(null);
 
     const [isLoading, setIsLoading] = useState(true);
@@ -26,9 +26,9 @@ const Messages = ({ user, dialog }) => {
     const sendMessage = async (event) => {
         event.preventDefault();
 
-        const message = newMessage.current.value;
+        const message = newMessage;
 
-        if (message.trim().length) {
+        if (message?.trim().length) {
             const myMessage = {
                 message: message,
                 uid: user.uid,
@@ -37,7 +37,7 @@ const Messages = ({ user, dialog }) => {
                 name: user.name,
             };
 
-            newMessage.current.value = "";
+            setNewMessage("");
 
             // add and save message to firestore
             const dialogRef = doc(db, "dialogs", dialogId);
@@ -117,7 +117,11 @@ const Messages = ({ user, dialog }) => {
                     <MessagesWrapper messages={messages} user={user} />
                 )}
 
-                <FormMessage onSubmit={sendMessage} newMessage={newMessage} />
+                <FormMessage
+                    onSubmit={sendMessage}
+                    setNewMessage={setNewMessage}
+                    newMessage={newMessage}
+                />
             </BodyComponent>
         </>
     );
