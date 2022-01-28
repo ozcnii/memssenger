@@ -2,128 +2,52 @@ import Header from "./Header/Header";
 import BodyComponent from "../../components/Layout/Body/BodyComponent";
 import FormMessage from "./FormMessage/FormMessage";
 import MessagesWrapper from "./MessagesWrapper/MessagesWrapper";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { db } from "../../firebase";
-import {
-    doc,
-    getDoc,
-    onSnapshot,
-    setDoc,
-    updateDoc,
-} from "@firebase/firestore";
+import { doc, onSnapshot } from "@firebase/firestore";
 import Preloader from "../../components/Preloader/Preloader";
-import { useHistory } from "react-router";
+import { observer } from "mobx-react-lite";
+import { dialogStore } from "../../store/dialog.store";
 
-const Messages = ({ user, dialog }) => {
-    const history = useHistory();
+const Messages = observer(() => {
+  useEffect(() => {
+    dialogStore.createDialogId();
+  }, []);
 
-    const [messages, setMessages] = useState([]);
-    const [newMessage, setNewMessage] = useState("");
-    const [dialogId, setDialogId] = useState(null);
+  useEffect(() => {
+    if (!dialogStore.dialogId) return;
 
-    const [isLoading, setIsLoading] = useState(true);
+    const unsub = onSnapshot(
+      doc(db, "dialogs", dialogStore.dialogId),
+      (doc) => {
+        const currentData = doc.data();
 
-    const sendMessage = async (event) => {
-        event.preventDefault();
-
-        const message = newMessage;
-
-        if (message?.trim().length) {
-            const myMessage = {
-                message: message,
-                uid: user.uid,
-                date: new Date(),
-                dialog_id: dialogId,
-                name: user.name,
-            };
-
-            setNewMessage("");
-
-            // add and save message to firestore
-            const dialogRef = doc(db, "dialogs", dialogId);
-            const docSnap = await getDoc(dialogRef);
-
-            // append message to existing dialogs
-            if (docSnap.exists()) {
-                const docData = docSnap.data();
-                await updateDoc(dialogRef, {
-                    messages: [...docData.messages, myMessage],
-                });
-            } else {
-                // create a new dialogs
-                await setDoc(doc(db, "dialogs", dialogId), {
-                    messages: [myMessage],
-                });
-            }
-        }
-    };
-
-    useEffect(() => {
-        if (!dialog || !user) return;
-
-        let myConvId = null;
-
-        if (dialog.uid > user.uid) {
-            myConvId = dialog.uid + user.uid;
+        if (currentData) {
+          if (currentData.messages.length > 0) {
+            dialogStore.setMessages(currentData.messages);
+          }
         } else {
-            myConvId = user.uid + dialog.uid;
+          dialogStore.setMessages([]);
         }
-
-        setDialogId(myConvId);
-        setIsLoading(false);
-    }, [dialog, user]);
-
-    useEffect(() => {
-        if (!dialogId) return;
-
-        const unsub = onSnapshot(doc(db, "dialogs", dialogId), (doc) => {
-            const currentData = doc.data();
-
-            if (currentData) {
-                if (currentData.messages.length > 0) {
-                    setMessages(currentData.messages);
-                }
-            } else {
-                setMessages([]);
-            }
-        });
-
-        return unsub;
-    }, [dialogId]);
-
-    useEffect(() => {
-        function goToDialogs(event) {
-            if (event.keyCode === 27 || event.code === "Escape") {
-                history.goBack();
-            }
-        }
-
-        document.addEventListener("keydown", (event) => goToDialogs(event));
-        return () => {
-            document.removeEventListener("keydown", (event) =>
-                goToDialogs(event)
-            );
-        };
-    }, [history]);
-
-    return (
-        <>
-            <Header dialog={dialog} />
-
-            <BodyComponent>
-                {isLoading ? (
-                    <Preloader />
-                ) : (
-                    <MessagesWrapper messages={messages} user={user} />
-                )}
-
-                <FormMessage
-                    onSubmit={sendMessage}
-                    setNewMessage={setNewMessage}
-                    newMessage={newMessage}
-                />
-            </BodyComponent>
-        </>
+      }
     );
-};
+
+    return () => {
+      unsub();
+      dialogStore.setAll();
+    };
+  }, []);
+
+  return (
+    <>
+      <Header />
+
+      <BodyComponent>
+        {dialogStore.loading ? <Preloader /> : <MessagesWrapper />}
+
+        <FormMessage />
+      </BodyComponent>
+    </>
+  );
+});
 export default Messages;

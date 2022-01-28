@@ -1,122 +1,92 @@
 import s from "./../EditName/EditName.module.css";
 import ReactDOM from "react-dom";
-import {
-    collection,
-    query,
-    where,
-    getDocs,
-    doc,
-    updateDoc,
-} from "firebase/firestore";
-import { db } from "./../../../firebase";
+
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { useState } from "react";
+import { userStore } from "../../../store/user.store";
 
-export default function EditName({ setModal, user, setUser }) {
-    return ReactDOM.createPortal(
-        <Modal setModal={setModal} user={user} setUser={setUser} />,
-        document.body
-    );
+export default function EditAvatar({ setModal }) {
+  return ReactDOM.createPortal(<Modal setModal={setModal} />, document.body);
 }
 
-function Modal({ setModal, user, setUser }) {
-    const [isLoading, setIsLoading] = useState(false);
+function Modal({ setModal }) {
+  const [isLoading, setIsLoading] = useState(false);
+  const user = userStore.user;
 
-    const onChange = async (event) => {
-        setIsLoading(true);
-        event.preventDefault();
+  const onChange = async (event) => {
+    setIsLoading(true);
+    event.preventDefault();
 
-        const file = event.target.files[0];
-        await getAvatarUrl(file);
-    };
+    const file = event.target.files[0];
+    await getAvatarUrl(file);
+  };
 
-    const getAvatarUrl = async (file) => {
-        if (file.size > 1024 * 1024 * 10) {
-            alert("Размер изображения слишком большой");
-        } else {
-            const avatarName = user.uid + "_avatar";
-            const storage = getStorage();
-            const storageRef = ref(storage, avatarName);
+  const getAvatarUrl = async (file) => {
+    if (file.size > 1024 * 1024 * 10) {
+      alert("Размер изображения слишком большой");
+      setModal(false);
+    } else if (
+      file.type !== "image/png" &&
+      file.type !== "image/jpg" &&
+      file.type !== "image/jpeg"
+    ) {
+      console.log(file.type !== "image/png");
+      alert("Можно загружать только изображения (png/jpg/jpeg)");
+      setModal(false);
+    } else {
+      const avatarName = user.uid + "_avatar";
+      const storage = getStorage();
+      const storageRef = ref(storage, avatarName);
 
-            await uploadBytes(storageRef, file).then(() => {
-                getDownloadURL(ref(storage, avatarName))
-                    .then((url) => {
-                        const avatarUrl = url;
+      await uploadBytes(storageRef, file).then(() => {
+        getDownloadURL(ref(storage, avatarName))
+          .then(async (url) => {
+            const avatarUrl = url;
 
-                        updateAvatar(avatarUrl);
-                    })
-                    .catch((error) => {
-                        console.log(error);
-                    });
-            });
-        }
-    };
+            const newUser = await userStore.editUserAvatar(avatarUrl);
 
-    const updateAvatar = async (avatarUrl) => {
-        let docID = "";
-
-        const q = query(collection(db, "users"), where("uid", "==", user.uid));
-        const querySnapshot = await getDocs(q);
-        querySnapshot.forEach((doc) => {
-            docID = doc.id;
-        });
-
-        const avatarRef = doc(db, "users", docID);
-
-        updateDoc(avatarRef, {
-            avatar: avatarUrl,
-        });
-
-        const newUser = { ...user, avatar: avatarUrl };
-        setUser(newUser);
-
-        localStorage.setItem("user", JSON.stringify(newUser));
-
-        setIsLoading(false);
-        setModal(false);
-    };
-
-    const onClose = (event) => {
-        event.stopPropagation();
-
-        if (event.target.dataset.close === "close") {
+            if (newUser !== undefined) {
+              localStorage.setItem("user", JSON.stringify(newUser));
+            }
             setModal(false);
-        }
-    };
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      });
+    }
+  };
 
-    return (
-        <div className={s.modal} data-close="close" onClick={onClose}>
-            <div className={s.modalContent}>
-                <form onChange={onChange} className={s.form}>
-                    {!isLoading && (
-                        <>
-                            <label className={s.labelAvatar} htmlFor="avatar">
-                                Выберите файл
-                            </label>
+  const onClose = (event) => {
+    event.stopPropagation();
+    if (event.target.dataset.close === "close") {
+      setModal(false);
+    }
+  };
 
-                            <input
-                                className={s.inputAvatar}
-                                type="file"
-                                id="avatar"
-                            />
-                        </>
-                    )}
+  return (
+    <div className={s.modal} data-close="close" onClick={onClose}>
+      <div className={s.modalContent}>
+        <form onChange={onChange} className={s.form}>
+          {!isLoading && (
+            <>
+              <label className={s.labelAvatar} htmlFor="avatar">
+                Выберите файл
+              </label>
 
-                    {isLoading && (
-                        <div className={s.labelAvatar}>loading...</div>
-                    )}
-                </form>
+              <input className={s.inputAvatar} type="file" id="avatar" />
+            </>
+          )}
 
-                {!isLoading && (
-                    <button
-                        onClick={onClose}
-                        data-close="close"
-                        className={s.close}
-                    >
-                        Отменить
-                    </button>
-                )}
-            </div>
-        </div>
-    );
+          {isLoading && <div className={s.labelAvatar}>loading...</div>}
+        </form>
+
+        {!isLoading && (
+          <button onClick={onClose} data-close="close" className={s.close}>
+            Отменить
+          </button>
+        )}
+      </div>
+    </div>
+  );
 }

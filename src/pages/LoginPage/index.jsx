@@ -2,124 +2,86 @@ import s from "./LoginPage.module.css";
 import { NavLink } from "react-router-dom";
 import routes from "../../routes/routes";
 import { useRef, useEffect, useState } from "react";
-import { auth } from "../../firebase";
-import { signInWithEmailAndPassword } from "@firebase/auth";
 import { useHistory } from "react-router-dom";
-import { collection, query, where, getDocs } from "firebase/firestore";
-import { db } from "../../firebase";
 import Alert from "../../components/Alert/Alert";
+import { userStore } from "../../store/user.store";
+import { observer } from "mobx-react-lite";
 
-export default function LoginPage({ setUser }) {
-    const [showAlert, setShowAlert] = useState(false);
-    const [alertText, setAlertText] = useState(null);
+const LoginPage = observer(() => {
+  const [showAlert, setShowAlert] = useState(false);
+  const [alertText, setAlertText] = useState(null);
 
-    const history = useHistory();
+  const history = useHistory();
+  const email = useRef(null);
+  const password = useRef(null);
 
-    const email = useRef(null);
-    const password = useRef(null);
+  const login = async (event) => {
+    event.preventDefault();
+    const myEmail = email.current.value.trim();
+    const myPassword = password.current.value.trim();
 
-    const login = async (event) => {
-        event.preventDefault();
-        const myEmail = email.current.value.trim();
-        const myPassword = password.current.value.trim();
-
-        if (myEmail && myPassword) {
-            try {
-                const responseFromAuth = await signInWithEmailAndPassword(
-                    auth,
-                    myEmail,
-                    myPassword
-                );
-
-                let myName = null;
-                let myAvatar = null;
-                const userId = responseFromAuth.user.uid;
-
-                const citiesRef = collection(db, "users");
-                const q = query(citiesRef, where("email", "==", myEmail));
-
-                const querySnapshot = await getDocs(q);
-                querySnapshot.forEach((doc) => {
-                    myName = doc.data().name;
-                    myAvatar = doc.data().avatar;
-                });
-
-                // save user to localStorage;
-                localStorage.setItem(
-                    "user",
-                    JSON.stringify({
-                        email: myEmail,
-                        uid: userId,
-                        name: myName,
-                        avatar: myAvatar,
-                    })
-                );
-
-                // set user an active in app;
-                setUser({
-                    email: myEmail,
-                    uid: userId,
-                    name: myName,
-                    avatar: myAvatar,
-                });
-
-                history.push(routes.dialogs);
-            } catch (error) {
-                const text = error.message;
-                setAlertText(text);
-                setShowAlert(true);
-            }
-        } else {
-            const text = "Все поля должны быыть заполнены";
-            setAlertText(text);
-            setShowAlert(true);
+    if (myEmail && myPassword) {
+      try {
+        const newUser = await userStore.login(myEmail, myPassword);
+        if (newUser !== undefined) {
+          localStorage.setItem("user", JSON.stringify(newUser));
         }
-    };
+        history.push(routes.dialogs);
+      } catch (error) {
+        setAlertText(error.message);
+        setShowAlert(true);
+      }
+    } else {
+      const text = "Все поля должны быыть заполнены";
+      setAlertText(text);
+      setShowAlert(true);
+    }
+  };
 
-    useEffect(() => {
-        const user = JSON.parse(localStorage.getItem("user"));
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("user"));
 
-        if (user) {
-            setUser(user);
-            history.push(routes.dialogs);
-        }
-    }, [history, setUser]);
+    if (user) {
+      userStore.setUser(user);
+      history.push(routes.dialogs);
+    }
+  }, [history]);
 
-    return (
-        <>
-            {showAlert && (
-                <Alert message={alertText} closeAlert={setShowAlert} />
-            )}
+  return (
+    <>
+      {showAlert && <Alert message={alertText} closeAlert={setShowAlert} />}
 
-            <div className={s.container}>
-                <div className={s.title}>Вход</div>
+      <div className={s.container}>
+        <div className={s.title}>Вход</div>
 
-                <form onSubmit={login} className={s.form}>
-                    <input
-                        ref={email}
-                        type="text"
-                        placeholder="Эл. адрес"
-                        className={s.login}
-                    />
+        <form onSubmit={login} className={s.form}>
+          <input
+            ref={email}
+            type="text"
+            placeholder="Эл. адрес"
+            className={s.login}
+          />
 
-                    <input
-                        ref={password}
-                        type="password"
-                        placeholder="Пароль"
-                        className={s.password}
-                    />
+          <input
+            ref={password}
+            type="password"
+            placeholder="Пароль"
+            className={s.password}
+          />
 
-                    <button type="submit" className={s.submit}>
-                        Войти
-                    </button>
+          <button type="submit" className={s.submit}>
+            {userStore.loading ? "Загрузка..." : "Войти"}
+          </button>
 
-                    <div>
-                        <NavLink to={routes.registr} className={s.registr}>
-                            Регистрация
-                        </NavLink>
-                    </div>
-                </form>
-            </div>
-        </>
-    );
-}
+          <div>
+            <NavLink to={routes.registr} className={s.registr}>
+              Регистрация
+            </NavLink>
+          </div>
+        </form>
+      </div>
+    </>
+  );
+});
+
+export default LoginPage;

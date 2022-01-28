@@ -6,73 +6,27 @@ import SearchPage from "./pages/SearchPage";
 import SettingsPage from "./pages/SettingsPage";
 import LoginPage from "./pages/LoginPage";
 import RegistrationPage from "./pages/LoginPage/RegistrationPage/RegistrationPage";
-import { useState } from "react";
 
 function App() {
-    const [user, setUser] = useState(null);
+  return (
+    <HashRouter>
+      <div className="header-background"></div>
 
-    const [chats, setChats] = useState([]);
-    const [dialog, setDialog] = useState(null);
+      <Switch>
+        <Route exact path="/" render={() => <Redirect to={routes.login} />} />
+        <Route path={routes.dialogs} render={() => <DialogsPage />} />
 
-    return (
-        <HashRouter>
-            <div className="header-background"></div>
+        <Route path={routes.messages + "/:id"} render={() => <Messages />} />
+        <Route path={routes.settings} render={() => <SettingsPage />} />
+        <Route path={routes.search} render={() => <SearchPage />} />
 
-            <Switch>
-                <Route
-                    exact
-                    path="/"
-                    render={() => <Redirect to={routes.login} />}
-                />
+        <Route path={routes.login} render={() => <LoginPage />} />
+        <Route path={routes.registr} render={() => <RegistrationPage />} />
 
-                <Route
-                    path={routes.dialogs}
-                    render={() => (
-                        <DialogsPage
-                            user={user}
-                            setUser={setUser}
-                            chats={chats}
-                            setChats={setChats}
-                            setDialog={setDialog}
-                        />
-                    )}
-                />
-
-                <Route
-                    path={routes.messages + "/:id"}
-                    render={() => <Messages dialog={dialog} user={user} />}
-                />
-                <Route
-                    path={routes.settings}
-                    render={() => (
-                        <SettingsPage setUser={setUser} user={user} />
-                    )}
-                />
-                <Route
-                    path={routes.search}
-                    render={() => (
-                        <SearchPage user={user} setDialog={setDialog} />
-                    )}
-                />
-
-                <Route
-                    path={routes.login}
-                    render={() => <LoginPage user={user} setUser={setUser} />}
-                />
-                <Route
-                    path={routes.registr}
-                    render={() => (
-                        <RegistrationPage user={user} setUser={setUser} />
-                    )}
-                />
-
-                <Route
-                    path="*"
-                    render={() => <Redirect to={routes.dialogs} />}
-                />
-            </Switch>
-        </HashRouter>
-    );
+        <Route path="*" render={() => <Redirect to={routes.dialogs} />} />
+      </Switch>
+    </HashRouter>
+  );
 }
 
 export default App;
