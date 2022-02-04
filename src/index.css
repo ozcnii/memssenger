@@ -9,9 +9,7 @@ body {
   color: #f6f6f6;
   max-width: 400px;
   margin: 0 auto;
-}
-* {
-  box-sizing: border-box;
+  overflow-x: hidden;
 }
 
 code {
@@ -41,6 +39,7 @@ a {
   right: 0;
   left: 0;
   background-color: #151515;
+  z-index: 10;
 }
 
 ::-webkit-scrollbar {
@@ -211,4 +210,12 @@ a {
     text-overflow: ellipsis;
     max-width: 130px;
   }
+}
+
+.x-hidden {
+  overflow-x: hidden;
+}
+
+* {
+  box-sizing: border-box;
 }

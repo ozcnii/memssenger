@@ -1,6 +1,6 @@
 import s from "./../EditName/EditName.module.css";
 import ReactDOM from "react-dom";
-
+import { motion } from "framer-motion/dist/framer-motion";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { useState } from "react";
 import { userStore } from "../../../store/user.store";
@@ -66,27 +66,29 @@ function Modal({ setModal }) {
 
   return (
     <div className={s.modal} data-close="close" onClick={onClose}>
-      <div className={s.modalContent}>
-        <form onChange={onChange} className={s.form}>
+      <motion.div initial={{ y: "100%" }} animate={{ y: "0%" }}>
+        <div className={s.modalContent}>
+          <form onChange={onChange} className={s.form}>
+            {!isLoading && (
+              <>
+                <label className={s.labelAvatar} htmlFor="avatar">
+                  Выберите файл
+                </label>
+
+                <input className={s.inputAvatar} type="file" id="avatar" />
+              </>
+            )}
+
+            {isLoading && <div className={s.labelAvatar}>loading...</div>}
+          </form>
+
           {!isLoading && (
-            <>
-              <label className={s.labelAvatar} htmlFor="avatar">
-                Выберите файл
-              </label>
-
-              <input className={s.inputAvatar} type="file" id="avatar" />
-            </>
+            <button onClick={onClose} data-close="close" className={s.close}>
+              Отменить
+            </button>
           )}
-
-          {isLoading && <div className={s.labelAvatar}>loading...</div>}
-        </form>
-
-        {!isLoading && (
-          <button onClick={onClose} data-close="close" className={s.close}>
-            Отменить
-          </button>
-        )}
-      </div>
+        </div>
+      </motion.div>
     </div>
   );
 }

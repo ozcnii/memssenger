@@ -30,7 +30,6 @@ class ChatStore {
   async getDialogs() {
     const querySnapshop = await getDocs(collection(db, "dialogs"));
     const allMessages = querySnapshop.docs.map((doc) => doc.data());
-
     const authUserDialogs = [];
 
     allMessages.forEach((message) => {
@@ -43,7 +42,6 @@ class ChatStore {
     });
 
     this.setDialogs(authUserDialogs);
-
     if (allMessages) {
       this.setLoading(false);
     }

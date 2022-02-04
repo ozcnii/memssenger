@@ -2,7 +2,7 @@ import s from "./EditName.module.css";
 import ReactDOM from "react-dom";
 import { useRef } from "react";
 import { userStore } from "../../../store/user.store";
-
+import { motion } from "framer-motion/dist/framer-motion";
 export default function EditName({ setModal }) {
   return ReactDOM.createPortal(<Modal setModal={setModal} />, document.body);
 }
@@ -32,21 +32,23 @@ function Modal({ setModal }) {
 
   return (
     <div className={s.modal} data-close="close" onClick={onClose}>
-      <div className={s.modalContent}>
-        <div className={s.form}>
-          <input
-            autoFocus
-            ref={newName}
-            placeholder="Введите имя"
-            type="text"
-          />
-          <button onClick={onClickHandler}>Сохранить</button>
-        </div>
+      <motion.div initial={{ y: "100%" }} animate={{ y: "0%" }}>
+        <div className={s.modalContent}>
+          <div className={s.form}>
+            <input
+              autoFocus
+              ref={newName}
+              placeholder="Введите имя"
+              type="text"
+            />
+            <button onClick={onClickHandler}>Сохранить</button>
+          </div>
 
-        <button onClick={onClose} data-close="close" className={s.close}>
-          Отменить
-        </button>
-      </div>
+          <button onClick={onClose} data-close="close" className={s.close}>
+            Отменить
+          </button>
+        </div>
+      </motion.div>
     </div>
   );
 }

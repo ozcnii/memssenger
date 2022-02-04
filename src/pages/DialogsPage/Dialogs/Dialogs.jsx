@@ -1,8 +1,6 @@
 import Dialog from "../Dialog/Dialog";
-import BodyComponent from "../../../components/Layout/Body/BodyComponent";
 import { useHistory } from "react-router";
-import { useEffect } from "react";
-
+import { useEffect, useLayoutEffect } from "react";
 import Preloader from "../../../components/Preloader/Preloader";
 import { NavLink } from "react-router-dom";
 import { observer } from "mobx-react-lite";
@@ -22,30 +20,28 @@ const Dialogs = observer(() => {
     }
   }, [history]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     chatStore.getChats();
   }, []);
 
   return (
     <>
-      <BodyComponent>
-        {chatStore.loading ? (
-          <Preloader />
-        ) : chatStore.dialogs.length !== 0 ? (
-          <>
-            {chatStore.users.map((user) => (
-              <Dialog key={user.uid} user={user} dialogs={chatStore.dialogs} />
-            ))}
-          </>
-        ) : (
-          <>
-            <div className="not-dialogs">Сообщений не найдено</div>
-            <div className="to-search">
-              <NavLink to={"search"}> К списку пользователей </NavLink>
-            </div>
-          </>
-        )}
-      </BodyComponent>
+      {chatStore.loading ? (
+        <Preloader />
+      ) : chatStore.dialogs.length !== 0 && chatStore.users.length !== 0 ? (
+        <>
+          {chatStore.users.map((user) => (
+            <Dialog key={user.uid} user={user} dialogs={chatStore.dialogs} />
+          ))}
+        </>
+      ) : (
+        <>
+          <div className="not-dialogs">Сообщений не найдено</div>
+          <div className="to-search">
+            <NavLink to={"search"}> К списку пользователей </NavLink>
+          </div>
+        </>
+      )}
     </>
   );
 });

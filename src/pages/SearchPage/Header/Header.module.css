@@ -1,20 +1,20 @@
 .backButton {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-right: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 20px;
 }
 .backButton svg {
-    fill: #f6f6f6;
-    height: 25px;
+  fill: #f6f6f6;
+  height: 25px;
 }
 .container {
-    display: flex;
+  display: flex;
 }
 .input {
-    width: 100%;
-    background-color: transparent;
-    border: none;
-    outline: none;
-    color: #f6f6f6;
+  width: 100%;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  color: #f6f6f6;
 }

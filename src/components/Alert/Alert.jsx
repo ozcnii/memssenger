@@ -1,30 +1,40 @@
 import s from "./Alert.module.css";
 import ReactDOM from "react-dom";
-import { useState } from "react";
-
+import { useEffect, useState } from "react";
+import { motion } from "framer-motion/dist/framer-motion";
 export default function Alert({ message, closeAlert }) {
-    return ReactDOM.createPortal(
-        <Modal message={message} closeAlert={closeAlert} />,
-        document.body
-    );
+  return ReactDOM.createPortal(
+    <Modal message={message} closeAlert={closeAlert} />,
+    document.body
+  );
 }
 
 function Modal({ message, closeAlert }) {
-    const [isClosed, setIsClosed] = useState(false);
+  const [isClosed, setIsClosed] = useState(false);
 
-    setTimeout(() => {
-        setIsClosed(true);
+  useEffect(() => {
+    const showTimeout = setTimeout(() => {
+      setIsClosed(true);
     }, 4000);
+    const closeTimeout = closeAlert
+      ? setTimeout(() => {
+          closeAlert(false);
+        }, 4300)
+      : 0;
 
-    if (closeAlert) {
-        setTimeout(() => {
-            closeAlert(false);
-        }, 4300);
-    }
+    return () => {
+      clearTimeout(showTimeout);
+      clearTimeout(closeTimeout);
+    };
+  }, [closeAlert]);
 
-    return (
+  return (
+    <div className={s.wrapper}>
+      <motion.div initial={{ x: "100%" }} animate={{ x: "0%" }}>
         <div className={isClosed ? s.alert + " " + s.close : s.alert}>
-            <div className={s.container}>{message}</div>
+          <div className={s.container}>{message}</div>
         </div>
-    );
+      </motion.div>
+    </div>
+  );
 }

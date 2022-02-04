@@ -5,19 +5,21 @@ import ScrollableFeed from "react-scrollable-feed";
 import { userStore } from "../../../store/user.store";
 import { dialogStore } from "../../../store/dialog.store";
 import { observer } from "mobx-react-lite";
-
-const innerHeight = window.innerHeight;
+import useInnerHeight from "../../../hooks/useInnerHeight";
 
 const MessagesWrapper = observer(() => {
   const user = userStore.user;
+  const headerHeight = 168;
+  const innerHeight = useInnerHeight();
 
   return (
     <>
       <div
+        layout
         className={s.messagesWrapper}
-        style={{ height: innerHeight - 168 + "px" }}
+        style={{ height: innerHeight - headerHeight + "px" }}
       >
-        <ScrollableFeed>
+        <ScrollableFeed className="x-hidden">
           {dialogStore.messages.map(({ message, uid, date }, i) => (
             <Message
               key={`message_key_${i}`}
