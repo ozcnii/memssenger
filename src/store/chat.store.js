@@ -41,7 +41,13 @@ class ChatStore {
       }
     });
 
-    this.setDialogs(authUserDialogs);
+    const s = authUserDialogs.sort((a, b) => {
+      const aLastIndex = a.length - 1;
+      const bLastIndex = b.length - 1;
+      return b[bLastIndex].date.seconds - a[aLastIndex].date.seconds;
+    });
+
+    this.setDialogs(s);
     if (allMessages) {
       this.setLoading(false);
     }

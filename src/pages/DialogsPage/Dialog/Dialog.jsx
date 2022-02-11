@@ -1,23 +1,35 @@
 import styles from "./Dialog.module.css";
 import { NavLink } from "react-router-dom";
 import routes from "../../../routes/routes";
-import { useEffect, useState } from "react";
+import { useLayoutEffect, useMemo, useState } from "react";
 import { userStore } from "../../../store/user.store";
 import { observer } from "mobx-react-lite";
 import { getLastMessage } from "../../../utils/getLastMessage";
 import { chatStore } from "../../../store/chat.store";
 import { dialogStore } from "../../../store/dialog.store";
 
-const Message = observer(({ user, dialogs }) => {
+const Message = observer(({ dialog }) => {
   const authUser = userStore.user;
-  const [lastMessage, setLastMessage] = useState("-");
+  const [lastMessage, setLastMessage] = useState("");
+  const [user, setUser] = useState("");
+
+  useMemo(() => {
+    const dialogId = dialog[0].dialog_id;
+
+    chatStore.users.forEach((user) => {
+      if (dialogId.includes(user.uid)) {
+        setUser(user);
+      }
+    });
+  }, [dialog]);
+
   const { name, uid, email, avatar } = user;
 
-  useEffect(() => {
-    const lastMessage = getLastMessage(dialogs, user);
+  useLayoutEffect(() => {
+    const lastMessage = getLastMessage(dialog);
     setLastMessage(lastMessage);
     chatStore.setLoading(false);
-  }, [dialogs, user]);
+  }, [dialog]);
 
   return (
     <>
@@ -36,12 +48,12 @@ const Message = observer(({ user, dialogs }) => {
           <div className={styles.info}>
             <div className={styles.top}>
               <div className={`${styles.userName} text-mw`}>{name}</div>
-              <div className={styles.date}>
+              <div className={styles.time}>
                 {chatStore.loading
                   ? null
                   : lastMessage.length === 0
                   ? null
-                  : lastMessage?.date}
+                  : lastMessage?.time}
               </div>
             </div>
             <div className="text-mw">

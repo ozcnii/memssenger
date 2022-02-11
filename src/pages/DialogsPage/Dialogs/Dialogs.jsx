@@ -30,8 +30,8 @@ const Dialogs = observer(() => {
         <Preloader />
       ) : chatStore.dialogs.length !== 0 && chatStore.users.length !== 0 ? (
         <>
-          {chatStore.users.map((user) => (
-            <Dialog key={user.uid} user={user} dialogs={chatStore.dialogs} />
+          {chatStore.dialogs.map((dialog) => (
+            <Dialog key={dialog[0].dialog_id} dialog={dialog} />
           ))}
         </>
       ) : (
