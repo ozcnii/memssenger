@@ -1,5 +1,5 @@
 import s from "../Messages.module.css";
-import getDate from "../../../utils/get_date";
+import getDate from "../../../utils/getDate";
 import { motion } from "framer-motion/dist/framer-motion";
 
 export default function Message({ message, uid, userUid, date }) {

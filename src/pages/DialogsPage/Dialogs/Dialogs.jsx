@@ -1,6 +1,6 @@
 import Dialog from "../Dialog/Dialog";
 import { useHistory } from "react-router";
-import { useEffect, useLayoutEffect } from "react";
+import { useLayoutEffect } from "react";
 import Preloader from "../../../components/Preloader/Preloader";
 import { NavLink } from "react-router-dom";
 import { observer } from "mobx-react-lite";
@@ -10,7 +10,9 @@ import { userStore } from "../../../store/user.store";
 const Dialogs = observer(() => {
   const history = useHistory();
 
-  useEffect(() => {
+  useLayoutEffect(() => {
+    chatStore.getChats();
+
     const user = JSON.parse(localStorage.getItem("user"));
 
     if (user) {
@@ -19,10 +21,6 @@ const Dialogs = observer(() => {
       history.push("/");
     }
   }, [history]);
-
-  useLayoutEffect(() => {
-    chatStore.getChats();
-  }, []);
 
   return (
     <>

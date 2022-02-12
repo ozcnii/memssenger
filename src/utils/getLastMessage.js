@@ -1,4 +1,4 @@
-import getDate from "./get_date";
+import getDate from "./getDate";
 
 export const getLastMessage = (dialog) => {
   const lastMessageIndex = dialog.length - 1;

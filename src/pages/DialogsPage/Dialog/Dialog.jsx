@@ -7,6 +7,7 @@ import { observer } from "mobx-react-lite";
 import { getLastMessage } from "../../../utils/getLastMessage";
 import { chatStore } from "../../../store/chat.store";
 import { dialogStore } from "../../../store/dialog.store";
+import { motion } from "framer-motion/dist/framer-motion";
 
 const Message = observer(({ dialog }) => {
   const authUser = userStore.user;
@@ -34,39 +35,41 @@ const Message = observer(({ dialog }) => {
   return (
     <>
       {lastMessage && lastMessage.length !== 0 ? (
-        <NavLink
-          to={routes.messages + `/${uid}`}
-          className={styles.messageContainer}
-          onClick={() =>
-            dialogStore.setActiveDialog({ email, uid, name, avatar })
-          }
-        >
-          <div className={styles.avatar}>
-            {user?.avatar && <img src={user.avatar} alt="" />}
-          </div>
+        <motion.div layout>
+          <NavLink
+            to={routes.messages + `/${uid}`}
+            className={styles.messageContainer}
+            onClick={() =>
+              dialogStore.setActiveDialog({ email, uid, name, avatar })
+            }
+          >
+            <div className={styles.avatar}>
+              {user?.avatar && <img src={user.avatar} alt="" />}
+            </div>
 
-          <div className={styles.info}>
-            <div className={styles.top}>
-              <div className={`${styles.userName} text-mw`}>{name}</div>
-              <div className={styles.time}>
+            <div className={styles.info}>
+              <div className={styles.top}>
+                <div className={`${styles.userName} text-mw`}>{name}</div>
+                <div className={styles.time}>
+                  {chatStore.loading
+                    ? null
+                    : lastMessage.length === 0
+                    ? null
+                    : lastMessage?.time}
+                </div>
+              </div>
+              <div className="text-mw">
                 {chatStore.loading
-                  ? null
-                  : lastMessage.length === 0
-                  ? null
-                  : lastMessage?.time}
+                  ? "Загрузка..."
+                  : lastMessage.length !== 0
+                  ? lastMessage.uid === authUser.uid
+                    ? `Вы: ${lastMessage.message}`
+                    : lastMessage.message
+                  : "Сообщений не найдено"}
               </div>
             </div>
-            <div className="text-mw">
-              {chatStore.loading
-                ? "Загрузка..."
-                : lastMessage.length !== 0
-                ? lastMessage.uid === authUser.uid
-                  ? `Вы: ${lastMessage.message}`
-                  : lastMessage.message
-                : "Сообщений не найдено"}
-            </div>
-          </div>
-        </NavLink>
+          </NavLink>
+        </motion.div>
       ) : null}
     </>
   );
