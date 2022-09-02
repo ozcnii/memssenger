@@ -1,20 +1,20 @@
 {
   "files": {
-    "main.css": "/memssenger/static/css/main.2cf74f19.chunk.css",
-    "main.js": "/memssenger/static/js/main.ea243758.chunk.js",
-    "main.js.map": "/memssenger/static/js/main.ea243758.chunk.js.map",
+    "main.css": "/memssenger/static/css/main.8a8f2eee.chunk.css",
+    "main.js": "/memssenger/static/js/main.27f756f8.chunk.js",
+    "main.js.map": "/memssenger/static/js/main.27f756f8.chunk.js.map",
     "runtime-main.js": "/memssenger/static/js/runtime-main.cf0dd7d7.js",
     "runtime-main.js.map": "/memssenger/static/js/runtime-main.cf0dd7d7.js.map",
-    "static/js/2.aba64775.chunk.js": "/memssenger/static/js/2.aba64775.chunk.js",
-    "static/js/2.aba64775.chunk.js.map": "/memssenger/static/js/2.aba64775.chunk.js.map",
+    "static/js/2.b9f04fe1.chunk.js": "/memssenger/static/js/2.b9f04fe1.chunk.js",
+    "static/js/2.b9f04fe1.chunk.js.map": "/memssenger/static/js/2.b9f04fe1.chunk.js.map",
     "index.html": "/memssenger/index.html",
-    "static/css/main.2cf74f19.chunk.css.map": "/memssenger/static/css/main.2cf74f19.chunk.css.map",
-    "static/js/2.aba64775.chunk.js.LICENSE.txt": "/memssenger/static/js/2.aba64775.chunk.js.LICENSE.txt"
+    "static/css/main.8a8f2eee.chunk.css.map": "/memssenger/static/css/main.8a8f2eee.chunk.css.map",
+    "static/js/2.b9f04fe1.chunk.js.LICENSE.txt": "/memssenger/static/js/2.b9f04fe1.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.cf0dd7d7.js",
-    "static/js/2.aba64775.chunk.js",
-    "static/css/main.2cf74f19.chunk.css",
-    "static/js/main.ea243758.chunk.js"
+    "static/js/2.b9f04fe1.chunk.js",
+    "static/css/main.8a8f2eee.chunk.css",
+    "static/js/main.27f756f8.chunk.js"
   ]
 }
