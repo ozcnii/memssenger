@@ -16,8 +16,6 @@ import { auth, db } from "../firebase";
 
 class UserStore {
   user = null;
-  loading = false;
-  error = null;
 
   constructor() {
     makeAutoObservable(this);
@@ -73,17 +71,9 @@ class UserStore {
 
     const user = { ...this.user, avatar: avatarUrl };
     this.setUser(user);
-
-    if (user) {
-      this.setLoading(false);
-    }
-
-    this.setLoading(false);
   }
 
   async login(myEmail, myPassword) {
-    this.setLoading(true);
-
     const responseFromAuth = await signInWithEmailAndPassword(
       auth,
       myEmail,
@@ -110,16 +100,10 @@ class UserStore {
       avatar: myAvatar,
     };
 
-    if (user) {
-      this.setLoading(false);
-    }
-
-    this.setUser(user);
     return user;
   }
 
   async register(myEmail, myPassword, myName) {
-    this.setLoading(true);
     const responseFromAuth = await createUserWithEmailAndPassword(
       auth,
       myEmail,
@@ -140,20 +124,7 @@ class UserStore {
       name: myName,
     };
 
-    if (user) {
-      this.setLoading(false);
-    }
-
-    this.setUser(user);
     return user;
-  }
-
-  setLoading(loading) {
-    this.loading = loading;
-  }
-
-  setError(error) {
-    this.error = error;
   }
 
   setUser(user) {

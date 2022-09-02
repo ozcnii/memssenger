@@ -1,10 +1,4 @@
-import {
-  Route,
-  Switch,
-  Redirect,
-  HashRouter,
-  useHistory,
-} from "react-router-dom";
+import { Route, Switch, Redirect, useHistory } from "react-router-dom";
 import routes from "./routes/routes";
 import DialogsPage from "./pages/DialogsPage";
 import Messages from "./pages/MessagePage";
@@ -43,7 +37,7 @@ const App = observer(() => {
   }
 
   return (
-    <HashRouter>
+    <>
       <div className="header-background"></div>
 
       <Switch>
@@ -59,7 +53,7 @@ const App = observer(() => {
 
         <Route path="*" render={() => <Redirect to={routes.dialogs} />} />
       </Switch>
-    </HashRouter>
+    </>
   );
 });
 

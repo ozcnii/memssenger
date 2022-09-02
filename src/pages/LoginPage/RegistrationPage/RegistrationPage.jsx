@@ -7,7 +7,8 @@ import Alert from "../../../components/Alert/Alert";
 import { userStore } from "../../../store/user";
 import { observer } from "mobx-react-lite";
 
-const RegistrationPage = observer(({ setUser }) => {
+const RegistrationPage = observer(() => {
+  const [isLoading, setIsLoading] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
   const [alertText, setAlertText] = useState(null);
 
@@ -25,6 +26,7 @@ const RegistrationPage = observer(({ setUser }) => {
     const myPassword = password.current.value.trim();
     const myConfirmPassword = confirmPassword.current.value.trim();
     const myName = userName.current.value.trim();
+    let text = "";
 
     if (
       myEmail &&
@@ -34,35 +36,32 @@ const RegistrationPage = observer(({ setUser }) => {
       myPassword === myConfirmPassword
     ) {
       try {
+        setIsLoading(true);
         const newUser = await userStore.register(myEmail, myPassword, myName);
         if (newUser) {
           localStorage.setItem("user", JSON.stringify(newUser));
         }
         history.push("/chat");
       } catch (error) {
-        const text = error.message;
-        setAlertText(text);
-        setShowAlert(true);
+        text = error.message;
+      } finally {
+        setIsLoading(false);
       }
     } else if (myPassword !== myConfirmPassword) {
-      const text = "Пароли не совпадают";
-      setAlertText(text);
-      setShowAlert(true);
+      text = "Пароли не совпадают";
     } else {
-      const text = "Все поля должны быыть заполнены";
-      setAlertText(text);
-      setShowAlert(true);
+      text = "Все поля должны быыть заполнены";
     }
+
+    setAlertText(text);
+    setShowAlert(true);
   };
 
   useEffect(() => {
-    const user = JSON.parse(localStorage.getItem("user"));
-
-    if (user) {
-      setUser(user);
+    if (userStore.user) {
       history.push(routes.dialogs);
     }
-  }, [history, setUser]);
+  }, [history]);
 
   return (
     <>
@@ -73,10 +72,11 @@ const RegistrationPage = observer(({ setUser }) => {
 
         <form onSubmit={register} className={s.form}>
           <input
-            type="text"
+            type="email"
             ref={email}
             placeholder="Эл. адрес"
             className={s.login}
+            required
           />
 
           <input
@@ -84,6 +84,7 @@ const RegistrationPage = observer(({ setUser }) => {
             ref={password}
             placeholder="Пароль"
             className={s.password}
+            required
           />
 
           <input
@@ -91,6 +92,7 @@ const RegistrationPage = observer(({ setUser }) => {
             ref={confirmPassword}
             placeholder="Подтвердите пароль"
             className={s.passwordConfirm}
+            required
           />
 
           <input
@@ -98,10 +100,11 @@ const RegistrationPage = observer(({ setUser }) => {
             ref={userName}
             placeholder="Введите ваше имя"
             className={s.passwordConfirm}
+            required
           />
 
           <button type="submit" className={s.submit}>
-            {userStore.loading ? "Загрузка..." : "Регистрация"}
+            {isLoading ? "Загрузка..." : "Регистрация"}
           </button>
 
           <div>

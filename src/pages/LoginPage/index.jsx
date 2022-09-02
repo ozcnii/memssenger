@@ -36,10 +36,7 @@ const LoginPage = observer(() => {
   };
 
   useEffect(() => {
-    const user = JSON.parse(localStorage.getItem("user"));
-
-    if (user) {
-      userStore.setUser(user);
+    if (userStore.user) {
       history.push(routes.dialogs);
     }
   }, [history]);
