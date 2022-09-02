@@ -22,10 +22,7 @@ const LoginPage = observer(() => {
 
     if (myEmail && myPassword) {
       try {
-        const newUser = await userStore.login(myEmail, myPassword);
-        if (newUser !== undefined) {
-          localStorage.setItem("user", JSON.stringify(newUser));
-        }
+        await userStore.login(myEmail, myPassword);
         history.push(routes.dialogs);
       } catch (error) {
         setAlertText(error.message);

@@ -35,10 +35,9 @@ const RegistrationPage = observer(({ setUser }) => {
     ) {
       try {
         const newUser = await userStore.register(myEmail, myPassword, myName);
-        if (newUser !== undefined) {
+        if (newUser) {
           localStorage.setItem("user", JSON.stringify(newUser));
         }
-
         history.push("/chat");
       } catch (error) {
         const text = error.message;

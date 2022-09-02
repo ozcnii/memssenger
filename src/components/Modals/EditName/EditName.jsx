@@ -17,10 +17,7 @@ function Modal({ setModal }) {
     setIsLoading(true);
     const myName = newName.current.value.trim();
     if (myName.length > 0) {
-      const newUser = await userStore.editUserName(myName);
-      if (newUser) {
-        localStorage.setItem("user", JSON.stringify(newUser));
-      }
+      await userStore.editUserName(myName);
     }
     setIsLoading(false);
     setModal(false);

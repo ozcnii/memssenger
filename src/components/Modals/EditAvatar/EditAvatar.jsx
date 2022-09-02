@@ -45,10 +45,7 @@ function Modal({ setModal }) {
         getDownloadURL(ref(storage, avatarName))
           .then(async (url) => {
             const avatarUrl = url;
-            const newUser = await userStore.editUserAvatar(avatarUrl);
-            if (newUser) {
-              localStorage.setItem("user", JSON.stringify(newUser));
-            }
+            await userStore.editUserAvatar(avatarUrl);
           })
           .catch((error) => {
             alert("Произошла ошибка при обновлении аватара. " + error.message);
