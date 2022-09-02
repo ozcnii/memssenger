@@ -3,9 +3,10 @@
   margin: 0 auto;
   display: flex;
   align-items: center;
-  animation: show 0.3s;
-  border-radius: 10px;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
 }
+
 .wrapper {
   position: absolute;
   width: 45%;
@@ -13,26 +14,7 @@
   right: 0;
   overflow: hidden;
 }
+
 .container {
   padding: 20px;
-}
-.close {
-  animation: close 0.3s;
-}
-@keyframes show {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
-}
-
-@keyframes close {
-  0% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-  }
 }
