@@ -10,7 +10,7 @@ import useInnerHeight from "../../../hooks/useInnerHeight";
 const MessagesWrapper = observer(() => {
   const user = userStore.user;
   const headerHeight = 168;
-  const innerHeight = useInnerHeight();
+  const { innerHeight } = useInnerHeight();
 
   return (
     <>

@@ -4,12 +4,12 @@ export default function useInnerHeight() {
   const [innerHeight, setInnerHeight] = useState(window.innerHeight);
 
   useLayoutEffect(() => {
-    const interval = setInterval(() => {
-      setInnerHeight(window.innerHeight);
-    }, 500);
-
-    return () => clearInterval(interval);
+    const listener = (e) => {
+      setInnerHeight(e.target.innerHeight);
+    };
+    window.addEventListener("resize", listener);
+    return () => window.removeEventListener("resize", listener);
   }, []);
 
-  return innerHeight;
+  return { innerHeight };
 }
