@@ -19,7 +19,7 @@ class ChatStore {
     const querySnapshop = await getDocs(collection(db, "users"));
     const filteredUsers = querySnapshop.docs
       .map((doc) => doc.data())
-      .filter((doc) => doc.uid !== userStore.user.uid);
+      .filter((doc) => doc?.uid !== userStore.user?.uid);
 
     this.serUsers(filteredUsers);
     if (filteredUsers) {

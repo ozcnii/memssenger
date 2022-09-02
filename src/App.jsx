@@ -7,7 +7,6 @@ import SettingsPage from "./pages/SettingsPage";
 import LoginPage from "./pages/LoginPage";
 import RegistrationPage from "./pages/LoginPage/RegistrationPage/RegistrationPage";
 import { observer } from "mobx-react-lite";
-import { chatStore } from "./store/chat";
 import { userStore } from "./store/user";
 import { useEffect, useState } from "react";
 import Preloader from "./components/Preloader/Preloader";
@@ -22,8 +21,6 @@ const App = observer(() => {
 
       if (user && user.uid) {
         await userStore.getMe(user?.uid);
-
-        chatStore.getChats();
       } else {
         history.push("/");
       }

@@ -68,7 +68,6 @@ class UserStore {
     updateDoc(avatarRef, {
       avatar: avatarUrl,
     });
-
     const user = { ...this.user, avatar: avatarUrl };
     this.setUser(user);
   }
@@ -99,6 +98,8 @@ class UserStore {
       name: myName,
       avatar: myAvatar,
     };
+
+    this.setUser(user);
 
     return user;
   }

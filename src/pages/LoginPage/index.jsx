@@ -8,6 +8,7 @@ import { userStore } from "../../store/user";
 import { observer } from "mobx-react-lite";
 
 const LoginPage = observer(() => {
+  const [isLoading, setIsLoading] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
   const [alertText, setAlertText] = useState(null);
 
@@ -21,16 +22,19 @@ const LoginPage = observer(() => {
     const myPassword = password.current.value.trim();
 
     if (myEmail && myPassword) {
+      setIsLoading(true);
       try {
-        await userStore.login(myEmail, myPassword);
+        const user = await userStore.login(myEmail, myPassword);
+        localStorage.setItem("user", JSON.stringify(user));
         history.push(routes.dialogs);
       } catch (error) {
         setAlertText(error.message);
         setShowAlert(true);
+      } finally {
+        setIsLoading(false);
       }
     } else {
-      const text = "Все поля должны быыть заполнены";
-      setAlertText(text);
+      setAlertText("Все поля должны быыть заполнены");
       setShowAlert(true);
     }
   };
@@ -51,9 +55,10 @@ const LoginPage = observer(() => {
         <form onSubmit={login} className={s.form}>
           <input
             ref={email}
-            type="text"
+            type="email"
             placeholder="Эл. адрес"
             className={s.login}
+            required
           />
 
           <input
@@ -61,10 +66,11 @@ const LoginPage = observer(() => {
             type="password"
             placeholder="Пароль"
             className={s.password}
+            required
           />
 
           <button type="submit" className={s.submit}>
-            {userStore.loading ? "Загрузка..." : "Войти"}
+            {isLoading ? "Загрузка..." : "Войти"}
           </button>
 
           <div>

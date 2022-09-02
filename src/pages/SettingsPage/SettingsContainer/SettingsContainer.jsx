@@ -15,28 +15,25 @@ import { LogoutIcon } from "../../../components/Icons/LogoutIcon/LogoutIcon";
 import { InformationIcon } from "../../../components/Icons/InformationIcon/InformationIcon";
 
 const SettingsContainer = observer(() => {
+  const history = useHistory();
   const user = userStore.user;
+
+  useEffect(() => {
+    if (!user) {
+      history.replace("/");
+    }
+  }, [history, user]);
 
   const [editNameModal, setEditNameModal] = useState(false);
   const [editAvatarModal, setEditAvatarModal] = useState(false);
   const [showAlert, setAlert] = useState(false);
   const [alertText, setAlertText] = useState(null);
 
-  const history = useHistory();
-
   const logout = () => {
     localStorage.setItem("user", null);
     userStore.setUser(null);
     history.push(routes.login);
   };
-
-  useEffect(() => {
-    const user = JSON.parse(localStorage.getItem("user"));
-
-    if (user) {
-      userStore.setUser(user);
-    }
-  }, []);
 
   const showEditNameModal = () => {
     setEditNameModal(true);

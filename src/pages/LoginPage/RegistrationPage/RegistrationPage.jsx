@@ -26,7 +26,6 @@ const RegistrationPage = observer(() => {
     const myPassword = password.current.value.trim();
     const myConfirmPassword = confirmPassword.current.value.trim();
     const myName = userName.current.value.trim();
-    let text = "";
 
     if (
       myEmail &&
@@ -43,18 +42,18 @@ const RegistrationPage = observer(() => {
         }
         history.push("/chat");
       } catch (error) {
-        text = error.message;
+        setAlertText(error.message);
+        setShowAlert(true);
       } finally {
         setIsLoading(false);
       }
     } else if (myPassword !== myConfirmPassword) {
-      text = "Пароли не совпадают";
+      setAlertText("Пароли не совпадают");
+      setShowAlert(true);
     } else {
-      text = "Все поля должны быыть заполнены";
+      setAlertText("Все поля должны быыть заполнены");
+      setShowAlert(true);
     }
-
-    setAlertText(text);
-    setShowAlert(true);
   };
 
   useEffect(() => {
