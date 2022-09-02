@@ -14,25 +14,28 @@ function Modal({ setModal }) {
   const user = userStore.user;
 
   const onChange = async (event) => {
-    setIsLoading(true);
     event.preventDefault();
+    await getAvatarUrl(event.target.files[0]);
+  };
 
-    const file = event.target.files[0];
-    await getAvatarUrl(file);
+  const closeModalAndDisableLoading = () => {
+    setIsLoading(false);
+    setModal(false);
   };
 
   const getAvatarUrl = async (file) => {
+    setIsLoading(true);
+
     if (file.size > 1024 * 1024 * 10) {
       alert("Размер изображения слишком большой");
-      setModal(false);
+      closeModalAndDisableLoading();
     } else if (
       file.type !== "image/png" &&
       file.type !== "image/jpg" &&
       file.type !== "image/jpeg"
     ) {
-      console.log(file.type !== "image/png");
       alert("Можно загружать только изображения (png/jpg/jpeg)");
-      setModal(false);
+      closeModalAndDisableLoading();
     } else {
       const avatarName = user.uid + "_avatar";
       const storage = getStorage();
@@ -42,16 +45,16 @@ function Modal({ setModal }) {
         getDownloadURL(ref(storage, avatarName))
           .then(async (url) => {
             const avatarUrl = url;
-
             const newUser = await userStore.editUserAvatar(avatarUrl);
-
-            if (newUser !== undefined) {
+            if (newUser) {
               localStorage.setItem("user", JSON.stringify(newUser));
             }
-            setModal(false);
           })
           .catch((error) => {
-            console.log(error);
+            alert("Произошла ошибка при обновлении аватара. " + error.message);
+          })
+          .finally(() => {
+            closeModalAndDisableLoading();
           });
       });
     }
@@ -59,7 +62,7 @@ function Modal({ setModal }) {
 
   const onClose = (event) => {
     event.stopPropagation();
-    if (event.target.dataset.close === "close") {
+    if (event.target.dataset.close === "close" && !isLoading) {
       setModal(false);
     }
   };
@@ -79,7 +82,7 @@ function Modal({ setModal }) {
               </>
             )}
 
-            {isLoading && <div className={s.labelAvatar}>loading...</div>}
+            {isLoading && <div className={s.labelAvatar}>Загрузка...</div>}
           </form>
 
           {!isLoading && (
