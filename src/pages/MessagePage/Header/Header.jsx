@@ -5,7 +5,7 @@ import HeaderComponent from "../../../components/Layout/Header/HeaderComponent";
 import routes from "../../../routes/routes";
 import { useHistory } from "react-router";
 import { observer } from "mobx-react-lite";
-import { dialogStore } from "../../../store/dialog.store";
+import { dialogStore } from "../../../store/dialog";
 import { BackIcon } from "../../../components/Icons/BackIcon/BackIcon";
 
 const Header = observer(() => {

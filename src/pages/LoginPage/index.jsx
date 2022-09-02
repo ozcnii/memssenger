@@ -4,7 +4,7 @@ import routes from "../../routes/routes";
 import { useRef, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import Alert from "../../components/Alert/Alert";
-import { userStore } from "../../store/user.store";
+import { userStore } from "../../store/user";
 import { observer } from "mobx-react-lite";
 
 const LoginPage = observer(() => {

@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import { motion } from "framer-motion/dist/framer-motion";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { useState } from "react";
-import { userStore } from "../../../store/user.store";
+import { userStore } from "../../../store/user";
 
 export default function EditAvatar({ setModal }) {
   return ReactDOM.createPortal(<Modal setModal={setModal} />, document.body);

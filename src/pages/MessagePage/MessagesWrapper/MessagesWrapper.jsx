@@ -2,8 +2,8 @@ import React from "react";
 import s from "../Messages.module.css";
 import Message from "../Message/Message";
 import ScrollableFeed from "react-scrollable-feed";
-import { userStore } from "../../../store/user.store";
-import { dialogStore } from "../../../store/dialog.store";
+import { userStore } from "../../../store/user";
+import { dialogStore } from "../../../store/dialog";
 import { observer } from "mobx-react-lite";
 import useInnerHeight from "../../../hooks/useInnerHeight";
 

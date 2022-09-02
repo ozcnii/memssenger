@@ -6,7 +6,7 @@ import { useState } from "react";
 import EditName from "../../../components/Modals/EditName/EditName";
 import EditAvatar from "../../../components/Modals/EditAvatar/EditAvatar";
 import Alert from "../../../components/Alert/Alert";
-import { userStore } from "../../../store/user.store";
+import { userStore } from "../../../store/user";
 import { observer } from "mobx-react-lite";
 import { AvatarIcon } from "../../../components/Icons/AvatarIcon/AvatarIcon";
 import { EditNameIcon } from "../../../components/Icons/EditNameIcon/EditNameIcon";

@@ -17,15 +17,20 @@ import { auth, db } from "../firebase";
 class UserStore {
   user = null;
   loading = false;
-  error = false;
+  error = null;
 
   constructor() {
     makeAutoObservable(this);
   }
 
-  checkUser() {
-    // На dialogsPage
-    // this.setLoading(true);
+  async getMe(uid) {
+    const userRef = collection(db, "users");
+    const q = query(userRef, where("uid", "==", uid));
+    const querySnapshot = await getDocs(q);
+
+    querySnapshot.forEach((doc) => {
+      this.setUser(doc.data());
+    });
   }
 
   async editUserName(name) {

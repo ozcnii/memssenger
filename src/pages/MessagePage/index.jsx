@@ -7,7 +7,7 @@ import { db } from "../../firebase";
 import { doc, onSnapshot } from "@firebase/firestore";
 import Preloader from "../../components/Preloader/Preloader";
 import { observer } from "mobx-react-lite";
-import { dialogStore } from "../../store/dialog.store";
+import { dialogStore } from "../../store/dialog";
 
 const Messages = observer(() => {
   useEffect(() => {

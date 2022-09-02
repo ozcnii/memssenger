@@ -1,7 +1,7 @@
 import s from "./EditName.module.css";
 import ReactDOM from "react-dom";
 import { useRef, useState } from "react";
-import { userStore } from "../../../store/user.store";
+import { userStore } from "../../../store/user";
 import { motion } from "framer-motion/dist/framer-motion";
 
 export default function EditName({ setModal }) {

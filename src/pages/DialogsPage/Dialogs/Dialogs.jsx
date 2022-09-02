@@ -1,27 +1,10 @@
 import Dialog from "../Dialog/Dialog";
-import { useHistory } from "react-router";
-import { useLayoutEffect } from "react";
 import Preloader from "../../../components/Preloader/Preloader";
 import { NavLink } from "react-router-dom";
 import { observer } from "mobx-react-lite";
-import { chatStore } from "../../../store/chat.store";
-import { userStore } from "../../../store/user.store";
+import { chatStore } from "../../../store/chat";
 
 const Dialogs = observer(() => {
-  const history = useHistory();
-
-  useLayoutEffect(() => {
-    chatStore.getChats();
-
-    const user = JSON.parse(localStorage.getItem("user"));
-
-    if (user) {
-      userStore.setUser(user);
-    } else {
-      history.push("/");
-    }
-  }, [history]);
-
   return (
     <>
       {chatStore.loading ? (

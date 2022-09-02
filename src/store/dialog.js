@@ -1,7 +1,7 @@
 import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 import { makeAutoObservable } from "mobx";
 import { db } from "../firebase";
-import { userStore } from "./user.store";
+import { userStore } from "./user";
 
 class DialogStore {
   activeDialog = null;

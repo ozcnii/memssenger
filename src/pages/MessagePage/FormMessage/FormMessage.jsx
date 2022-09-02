@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import s from "../Messages.module.css";
 import Picker from "emoji-picker-react";
 import { observer } from "mobx-react-lite";
-import { userStore } from "../../../store/user.store";
-import { dialogStore } from "../../../store/dialog.store";
+import { userStore } from "../../../store/user";
+import { dialogStore } from "../../../store/dialog";
 import { EmojiIcon } from "../../../components/Icons/EmojiIcon/EmojiIcon";
 import { SendMessageIcon } from "../../../components/Icons/SendMessageIcon/SendMessageIcon";
 

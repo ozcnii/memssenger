@@ -1,7 +1,7 @@
 import { collection, getDocs } from "firebase/firestore";
 import { makeAutoObservable } from "mobx";
 import { db } from "../firebase";
-import { userStore } from "./user.store";
+import { userStore } from "./user";
 
 class ChatStore {
   users = [];

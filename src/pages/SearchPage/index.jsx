@@ -1,9 +1,8 @@
 import { observer } from "mobx-react-lite";
 import { useHistory } from "react-router-dom";
-import { chatStore } from "../../store/chat.store";
+import { chatStore } from "../../store/chat";
 import Header from "./Header/Header";
 import LastList from "./LastList/LastList";
-import { motion } from "framer-motion/dist/framer-motion";
 import BodyComponent from "../../components/Layout/Body/BodyComponent";
 
 const SearchPage = observer(() => {
@@ -22,13 +21,7 @@ const SearchPage = observer(() => {
     <>
       <Header searchUsers={searchUsers} />
       <BodyComponent>
-        <motion.div
-          initial={{ x: "100%" }}
-          animate={{ x: "0%" }}
-          // transition={{ easeInOut: 1 }}
-        >
-          <LastList users={chatStore.searchedUsers} />
-        </motion.div>
+        <LastList users={chatStore.searchedUsers} />
       </BodyComponent>
     </>
   );
